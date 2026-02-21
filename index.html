@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankku Dii - 3D Ultra Design</title>
+    <style>
+        :root {
+            --glow-1: #ff0077;
+            --glow-2: #00f2ff;
+            --glow-3: #7000ff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #020205;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* 3D Animated Background - Floating Light Rings */
+        .bg-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+            z-index: 1;
+        }
+
+        .ring {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: ringFloat 8s infinite linear;
+            will-change: transform, opacity;
+        }
+
+        @keyframes ringFloat {
+            0% { transform: translate(-50%, -50%) translateZ(-1000px) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.5; border-color: var(--glow-2); }
+            100% { transform: translate(-50%, -50%) translateZ(500px) rotate(360deg); opacity: 0; }
+        }
+
+        /* 3D Text Architecture */
+        .scene {
+            position: relative;
+            z-index: 10;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .text-wrapper {
+            transform-style: preserve-3d;
+            animation: cameraMove 5s ease-in-out infinite alternate;
+        }
+
+        .neon-wire {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            line-height: 1.2;
+            text-transform: uppercase;
+            color: transparent;
+            /* Liquid Wire Stroke */
+            -webkit-text-stroke: 1.5px #fff;
+            letter-spacing: 4px;
+            position: relative;
+            filter: drop-shadow(0 0 10px var(--glow-1));
+            animation: colorShift 6s infinite alternate, blink 4s infinite;
+        }
+
+        /* Advanced Color Flow Animation */
+        @keyframes colorShift {
+            0% { -webkit-text-stroke-color: var(--glow-1); filter: drop-shadow(0 0 20px var(--glow-1)); }
+            50% { -webkit-text-stroke-color: var(--glow-2); filter: drop-shadow(0 0 20px var(--glow-2)); }
+            100% { -webkit-text-stroke-color: var(--glow-3); filter: drop-shadow(0 0 20px var(--glow-3)); }
+        }
+
+        /* 3D Floating & Rotation */
+        @keyframes cameraMove {
+            from { transform: rotateY(-15deg) rotateX(10deg); }
+            to { transform: rotateY(15deg) rotateX(-10deg); }
+        }
+
+        /* High-End Blink (Electric Flicker) */
+        @keyframes blink {
+            0%, 10%, 12%, 20%, 22%, 70%, 72%, 100% { opacity: 1; }
+            11%, 21%, 71% { opacity: 0.3; }
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            .neon-wire {
+                font-size: 2rem;
+                letter-spacing: 2px;
+                -webkit-text-stroke: 1px #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container" id="bg">
+        </div>
+
+    <div class="scene">
+        <div class="text-wrapper">
+            <h1 class="neon-wire">
+                GOOD MORNING<br>ANKKU DII
+            </h1>
+        </div>
+    </div>
+
+    <script>
+        // Efficiently generate 3D background rings
+        const bg = document.getElementById('bg');
+        const colors = ['#ff0077', '#00f2ff', '#7000ff'];
+        
+        for (let i = 0; i < 15; i++) {
+            const ring = document.createElement('div');
+            ring.className = 'ring';
+            const size = 200 + (i * 100);
+            ring.style.width = size + 'px';
+            ring.style.height = size + 'px';
+            ring.style.animationDelay = (i * 0.5) + 's';
+            ring.style.borderColor = colors[i % 3];
+            bg.appendChild(ring);
+        }
+    </script>
+</body>
+</html>
